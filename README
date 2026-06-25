@@ -1,0 +1,196 @@
+Barbería API - Backend
+
+API REST desarrollada con Node.js y Express para la gestión de usuarios, autenticación y reservas de turnos en una barbería.
+
+Incluye autenticación JWT con cookies seguras, control de acceso por roles, recuperación de contraseña por correo electrónico, gestión de turnos, arquitectura en capas, MongoDB Atlas, Docker y despliegue en la nube.
+
+
+🚀 Tecnologías utilizadas
+
+Node.js
+Express
+MongoDB
+Mongoose
+Passport JWT
+JWT
+Cookies
+Nodemailer
+Docker
+Render
+Cloudflare Pages
+
+
+
+🧱 Arquitectura del proyecto
+
+El proyecto sigue una arquitectura en capas:
+
+Routes → definición de endpoints
+Controller → manejo de requests y responses
+Service → lógica de negocio
+Repository → acceso a datos (MongoDB)
+Models → esquemas de datos
+
+
+📁 Estructura del proyecto
+
+/src
+  /controllers
+  /routes
+  /services
+  /repository
+  /models
+  /config
+  app.js
+  server.js
+
+/
+├── src
+├── test
+├── Dockerfile
+├── package.json
+├── README.md
+├── .env (no se sube al repositorio)
+
+
+⚙️ Variables de entorno
+
+El proyecto requiere un archivo .env en la raíz con las siguientes variables:
+
+PORT=8080
+MONGO_ATLAS=your_mongo_uri_here
+JWT_SECRET=your_secret_here
+
+
+
+▶️ Ejecución local (sin Docker)
+npm install
+npm start
+
+
+Servidor disponible en:
+http://localhost:8080
+
+
+🐳 Docker
+
+📦 Descargar imagen de Docker hub:
+
+docker pull felipe73/barberia-api:1.0
+
+
+
+▶️ Ejecutar Contenedor Docker
+
+ docker run -p 3000:8080 --env-file .env felipe73/barberia-api:1.0
+
+La API quedará disponible en:
+
+http://localhost:3000
+
+🔐 Autenticación
+
+La API utiliza JWT para autenticación.
+
+Login:
+POST /api/auth/login
+
+
+👤 Endpoints principales
+
+Auth
+POST /api/auth/login
+POST /api/auth/register
+
+
+Users
+GET /api/user
+GET /api/user/:id
+POST /api/user
+PUT /api/user/:id
+DELETE /api/user/:id
+
+
+🧪 Testing
+
+El proyecto incluye:
+
+- Tests unitarios
+- Tests de integración
+- Tests de performance
+
+Ejecutar todos los tests Unitarios:
+
+npx mocha src/test/unit/**/*.js
+
+Ejecutar todos los tests de Integración:
+
+npx mocha src/test/integration/**/*.js
+
+
+Ejecutar todos los tests de Performance:
+
+npx artillery run src/test/performance/createAppointment.test.yml
+
+
+
+
+
+🐳 Docker Hub
+
+Imagen publicada:
+
+https://hub.docker.com/r/felipe73/barberia-api
+
+
+🚀 Flujo del proyecto:
+
+Código → Tests → Docker Build → Docker Hub → Run → API funcionando
+
+📌 Resumen
+
+Este proyecto incluye:
+
+API REST en Node.js
+Arquitectura en capas
+Autenticación con JWT
+MongoDB como base de datos
+Containerización con Docker
+Imagen publicada en Docker Hub
+
+
+📊 Estado del proyecto
+
+✔ API REST funcional
+✔ MongoDB Atlas conectado
+✔ Autenticación JWT implementada
+✔ Cookies seguras
+✔ Recuperación de contraseña por email
+✔ Confirmación y cancelación de turnos por email
+✔ Control de acceso por roles
+✔ Dockerizado
+✔ Deployado en Render
+✔ Frontend conectado mediante Cloudflare Pages
+
+
+
+
+
+
+## Destacados
+
+- Arquitectura limpia (Controller → Service → Repository)
+- Autenticación JWT (Passport + Cookies)
+- Control de acceso basado en roles (RBAC)
+- Patrón DTO para estructuración de datos
+- Uso de Proxy + Decorator para el sistema de mails
+- API containerizada con Docker
+- Tests de rendimiento con Artillery
+
+
+## Configuración
+
+1. Clonar el repositorio
+2. Instalar dependencias: npm install
+3. Crear archivo .env
+4. Ejecutar el proyecto: npm start
