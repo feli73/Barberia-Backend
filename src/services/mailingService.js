@@ -36,8 +36,8 @@ export async function enviar ({to, subject, text, html }) {
 
   } catch(err) {
 
-    console.error('Error al enviar correo')
-    throw new Error('No se pudo enviar el correo');
+    console.error('SMTP ERROR:', err.response || err.message || err)
+    throw err;
   }
 
  
