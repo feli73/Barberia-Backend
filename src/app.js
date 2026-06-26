@@ -9,6 +9,10 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 dotenv.config();
 
+console.log("MAIL USER:", process.env.GMAIL_USER);
+console.log("PASS LENGTH:", process.env.GMAIL_APP_PASS?.length);
+
+
 const PORT = process.env.PORT || 8080;
 
 const app = express();
