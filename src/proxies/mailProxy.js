@@ -5,7 +5,7 @@ const enviarConLog = withLogging(enviar);
 
 const mailProxy = new Proxy(enviarConLog, {   
 
-  apply: async (target, thisArg, args) => {
+   async apply (target, thisArg, args)  {
 
    const options = args[0];
    console.log(`[PROXY] validando correo a : ${options.to}`);
