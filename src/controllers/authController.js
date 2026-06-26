@@ -45,7 +45,9 @@ class AuthController{
 
      });
      
-     
+     console.log("Cookie enviada");
+
+
      res.json({ status: 'success', payload: result })
 
   } catch(err) {
