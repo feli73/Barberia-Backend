@@ -16,9 +16,10 @@ const app = express();
 
 const allowedOrigins = process.env.FRONTEND_URLS.split(",");
 
+app.set('trust proxy', 1);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended:true }))
+ app.use(cookieParser());
+
 app.use(cors({ 
     origin: function(origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
@@ -30,7 +31,10 @@ app.use(cors({
     credentials: true
  }));
  
- app.use(cookieParser());
+
+
+app.use(express.json());
+app.use(express.urlencoded({ extended:true }))
 
 connectionDB();
 

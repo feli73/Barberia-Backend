@@ -26,13 +26,11 @@ try {
 
 
 const cookieExtractor = req => {
-  let token = null;
-  if (req && req.cookies) {
-    token = req.cookies['token'];
-  }
+  console.log("COOKIES:", req.cookies);
+  console.log("HEADERS COOKIE:", req.headers.cookie);
 
-  return token;
-}
+  return req.cookies?.token || null;
+};
 
 const opts = { 
 
