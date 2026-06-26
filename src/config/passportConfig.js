@@ -26,11 +26,13 @@ try {
 
 
 const cookieExtractor = req => {
-  console.log("COOKIES:", req.cookies);
-  console.log("HEADERS COOKIE:", req.headers.cookie);
+  let token = null;
+  if (req && req.cookies) {
+    token = req.cookies['token'];
+  }
 
-  return req.cookies?.token || null;
-};
+  return token;
+}
 
 const opts = { 
 
@@ -41,8 +43,11 @@ const opts = {
 
 passport.use("jwt", new JwtStrategy(opts, async (jwt_payload, done) => {
 
+
+  console.log("PAYLOAD:", jwt_payload);
+
   try {
-    const user = await userModel.findById(jwt_payload.id).select('-password');
+    const user = await userModel.findById(jwt_payload.userId).select('-password');
     if(user) return done (null, user);
     else return done(null, false);
 
