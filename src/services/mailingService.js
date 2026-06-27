@@ -15,28 +15,15 @@ dns.lookup("smtp.gmail.com", { all: true }, (err, addresses) => {
 dns.setDefaultResultOrder("ipv4first");
 
 const transporter = nodemailer.createTransport({
-  host: "108.177.98.109",
-  port: 465,
-  secure: true,
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  requireTLS: true,
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_APP_PASS,
   },
-  tls: {
-    servername: "smtp.gmail.com",
-  },
 });
-
-
-transporter.verify((err, success) => {
-  if (err) {
-    console.error("VERIFY ERROR:", err);
-  } else {
-    console.log("SMTP listo");
-  }
-});
-
-
 
 
 
