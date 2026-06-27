@@ -4,7 +4,11 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-
+console.log({
+  host: process.env.BREVO_HOST,
+  port: process.env.BREVO_PORT,
+  user: process.env.BREVO_USER,
+});
 
 const transporter = nodemailer.createTransport({
   host: process.env.BREVO_HOST,
