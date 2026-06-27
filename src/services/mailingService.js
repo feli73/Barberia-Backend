@@ -5,6 +5,7 @@ import dns from "dns";
 dotenv.config();
 
 
+
 dns.lookup("smtp.gmail.com", { all: true }, (err, addresses) => {
   console.log("SMTP DNS:", err, addresses);
 });
@@ -25,6 +26,17 @@ const transporter = nodemailer.createTransport({
     servername: "smtp.gmail.com",
   },
 });
+
+
+transporter.verify((err, success) => {
+  if (err) {
+    console.error("VERIFY ERROR:", err);
+  } else {
+    console.log("SMTP listo");
+  }
+});
+
+
 
 
 
