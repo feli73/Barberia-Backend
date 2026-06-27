@@ -1,13 +1,17 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import dns from "dns";
+
 dotenv.config();
 
 
+// 🔥 FIX IMPORTANTE para IPv6 en Render
+dns.setDefaultResultOrder("ipv4first");
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
-  port: 587,
-  secure: false, // Use true for port 465, false for port 587
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_APP_PASS
