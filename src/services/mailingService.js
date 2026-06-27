@@ -14,16 +14,16 @@ dns.lookup("smtp.gmail.com", { all: true }, (err, addresses) => {
 dns.setDefaultResultOrder("ipv4first");
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "108.177.98.109",
   port: 465,
   secure: true,
   auth: {
     user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASS
+    pass: process.env.GMAIL_APP_PASS,
   },
-  connectionTimeout: 15000,
-  greetingTimeout: 15000,
-  socketTimeout: 15000,
+  tls: {
+    servername: "smtp.gmail.com",
+  },
 });
 
 
