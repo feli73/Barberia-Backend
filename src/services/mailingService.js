@@ -1,54 +1,41 @@
-import nodemailer from 'nodemailer';
+import { Resend } from "resend";
 import dotenv from 'dotenv';
-import dns from "dns";
 
 dotenv.config();
 
 
-// 🔥 FIX IMPORTANTE para IPv6 en Render
-dns.setDefaultResultOrder("ipv4first");
-
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASS
-  },
-  connectionTimeout: 15000,
-  greetingTimeout: 15000,
-  socketTimeout: 15000,
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 
+export async function enviar({ to, subject, text, html }) {
 
-export async function enviar ({to, subject, text, html }) {
-
-  if(!to || !subject || (!text && !html)){
-    throw new Error('Faltan parámetros al enviar el correo');
+  if (!to || !subject || (!text && !html)) {
+    throw new Error("Faltan parámetros al enviar el correo");
   }
 
   try {
-         const info = await transporter.sendMail({
-    from: process.env.GMAIL_USER,
-    to,
-    subject,
-    text, 
-    html 
-  });
 
-   console.log("Message sent:", info);
-     return info;
+    const info = await resend.emails.send({
+      from: "Mi App <onboarding@resend.dev>",
+      to,
+      subject,
+      text,
+      html,
+    });
 
-  } catch(err) {
+    console.log(info);
 
-    console.error('SMTP ERROR:', err.response || err.message || err)
+    return info;
+
+  } catch (err) {
+
+    console.error(err);
+
     throw err;
+
   }
 
- 
+}
 
 
 
-};
