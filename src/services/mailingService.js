@@ -1,18 +1,10 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
-import dns from "dns";
+
 
 dotenv.config();
 
 
-
-dns.lookup("smtp.gmail.com", { all: true }, (err, addresses) => {
-  console.log("SMTP DNS:", err, addresses);
-});
-
-
-// 🔥 FIX IMPORTANTE para IPv6 en Render
-dns.setDefaultResultOrder("ipv4first");
 
 const transporter = nodemailer.createTransport({
   host: process.env.BREVO_HOST,
@@ -34,7 +26,7 @@ export async function enviar ({to, subject, text, html }) {
 
   try {
          const info = await transporter.sendMail({
-    from: process.env.GMAIL_USER,
+    from: process.env.EMAIL_FROM,
     to,
     subject,
     text, 
