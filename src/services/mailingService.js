@@ -1,53 +1,48 @@
-import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
-
+import dotenv from "dotenv";
+import Brevo from "@getbrevo/brevo";
 
 dotenv.config();
 
-console.log({
-  host: process.env.BREVO_HOST,
-  port: process.env.BREVO_PORT,
-  user: process.env.BREVO_USER,
-});
+const apiInstance = new Brevo.TransactionalEmailsApi();
 
-const transporter = nodemailer.createTransport({
-  host: process.env.BREVO_HOST,
-  port: Number(process.env.BREVO_PORT),
-  secure: false, // puerto 587
-  auth: {
-    user: process.env.BREVO_USER,
-    pass: process.env.BREVO_PASS,
-  },
-});
+apiInstance.setApiKey(
+  Brevo.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY
+);
 
-
-
-export async function enviar ({to, subject, text, html }) {
-
-  if(!to || !subject || (!text && !html)){
-    throw new Error('Faltan parámetros al enviar el correo');
+export async function enviar({ to, subject, text, html }) {
+  if (!to || !subject || (!text && !html)) {
+    throw new Error("Faltan parámetros al enviar el correo");
   }
 
   try {
-         const info = await transporter.sendMail({
-    from: process.env.EMAIL_FROM,
-    to,
-    subject,
-    text, 
-    html 
-  });
+    const email = new Brevo.SendSmtpEmail();
 
-   console.log("Message sent:", info);
-     return info;
+    email.sender = {
+      email: process.env.EMAIL_FROM,
+      name: "Barbería",
+    };
 
-  } catch(err) {
+    email.to = [
+      {
+        email: to,
+      },
+    ];
 
-    console.error('SMTP ERROR:', err.response || err.message || err)
+    email.subject = subject;
+    email.textContent = text;
+    email.htmlContent = html;
+
+    const info = await apiInstance.sendTransacEmail(email);
+
+    console.log("Message sent:", info);
+
+    return info;
+  } catch (err) {
+    console.error(
+      "BREVO ERROR:",
+      err.response?.body || err.message || err
+    );
     throw err;
   }
-
- 
-
-
-
-};
+}
