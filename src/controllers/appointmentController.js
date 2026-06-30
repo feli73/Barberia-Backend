@@ -69,7 +69,8 @@ class AppointmentController{
       const subject = "Reserva de turno en Barbería";
       const html = `
         <p>Hola ${req.user.name || ""}</p>
-        <p>Has reservado un turno para el <strong>${new Date(result.date).toLocaleDateString()}</strong> a las <strong>${new Date(result.date).toLocaleTimeString()}</strong>.</p>
+        <p>Has reservado un turno para el <strong>${new Date(result.date).toLocaleDateString("es-AR", {timeZone: "America/Argentina/Buenos_Aires",})}</strong> a las <strong>${new Date(result.date).toLocaleTimeString("es-AR", {
+      timeZone: "America/Argentina/Buenos_Aires", hour: "2-digit", minute: "2-digit",})}</strong>.</p>
         <p>Por favor confirmá o cancelá tu turno en los siguientes enlaces:</p>
         <a href="${process.env.BACKEND_URL}/api/appointment/${result.id}/confirm?token=${confirmToken}"
            style="display:inline-block;padding:10px 20px;background:#28a745;color:#fff;text-decoration:none;border-radius:5px;">
